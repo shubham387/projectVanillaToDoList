@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page Counter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+
+        body {
+            font-family: 'Inter';
+        }
+
+        * {
+            margin: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0px;
+        }
+
+        .main-section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .main-section .container {
+            padding: 40px 30px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: auto;
+            box-shadow: 0px 0px 9px #3334;
+            border-radius: 10px;
+        }
+
+        h3 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .expenseForm {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+
+        .expenseForm .buttons {
+            margin-right: auto;
+        }
+
+        .expenseForm .button {
+            box-shadow: none;
+            outline: none;
+            border: 1px solid blue;
+            border-radius: 2px;
+            padding: 10px 15px;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            transition: 0.5s all;
+        }
+
+        .expenseForm .button:hover {
+            background-color: transparent;
+            color: black;
+        }
+
+        .expenseForm input {
+            box-shadow: none;
+            outline: none;
+            padding: 5px;
+        }
+
+        .expense-item {
+            background-color: #aaa3;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .expense-item span {
+            font-weight: bold;
+        }
+
+        .total-expense {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="main-section">
+        <div class="page-width">
+            <div class="container">
+                <h3>Expense Tracker</h3>
+                <form class="expenseForm">
+                    <label for="expenseName">Item Name:</label>
+                    <input id="expenseName" type="text" placeholder="Enter Expense Name" value="MyExpense" name="expense-name">
+                    <label for="expenseAmount">Item Amount:</label>
+                    <input id="expenseAmount" type="number" placeholder="Enter Expense Amount" value="25" name="expense-amount">
+                    <div class="buttons">
+                        <button class="button submit-button">Add Item</button>
+                        <button class="button reset-button">Clear All</button>
+                    </div>
+                </form>
+                <ul class="expense-list">
+                    
+                </ul>
+                <div class="total-expense">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script defer>
+       
+
+        let data = window.localStorage.getItem('expenseData')? JSON.parse(window.localStorage.getItem('expenseData')) : {items: [], total: 0} ;
+        console.log(data);
+
+        function getTotal(items) {
+            let total = 0;
+            items.forEach(item => {
+                total += item.amount;
+            });
+            return total;
+        }
+        function renderData(data) {
+            let expenseItems = []
+            
+            const showTotal = document.querySelector('.total-expense');
+             const itemTotal = data.items.length>0?getTotal(data.items):0;
+             document.querySelector('.expense-list').innerHTML = '';
+             
+            data.items.forEach(item => {
+                let li = elementCreator('li','expense-item');
+            let span1 = elementCreator('span', 'expense-name', `${item.name}`)
+            let span2 = elementCreator('span', 'expense-amount', `₹${item.amount}`)
+            li.appendChild(span1);
+            li.appendChild(span2);
+            document.querySelector('.expense-list').appendChild(li);
+            })
+            
+            showTotal.textContent = Number(itemTotal).toFixed(2);
+            
+        }
+        function elementCreator(type, className, content){
+            let el = document.createElement(type);
+            el.classList.add(className);
+            el.textContent = content;
+            return el;
+        }
+        renderData(data);
+
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            let formData = new FormData(event.currentTarget);
+            const expenseName = formData.get('expense-name');
+            const expenseAmount = Number(formData.get('expense-amount'));
+            data.items.unshift({name: expenseName, amount: expenseAmount});
+            
+           window.localStorage.setItem('expenseData',JSON.stringify(data));
+           renderData(data);
+           console.log(JSON.stringify(data));
+           console.log(JSON.parse(window.localStorage.getItem('expenseData')));           
+        })
+    
+        //Clear All functionality
+        document.querySelector('.button.reset-button').addEventListener('click',(event) => {
+            event.preventDefault();
+            data = {
+                items: [],
+                total: 0
+            }
+            console.log(data);
+            window.localStorage.setItem('expenseData', JSON.stringify(data));
+            renderData(data);
+        })
+    </script>   
+</body>
+
+</html>
