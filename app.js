@@ -1,6 +1,3 @@
-
-       
-
 let data = window.localStorage.getItem('expenseData')? JSON.parse(window.localStorage.getItem('expenseData')) : {items: []} ;
 console.log(data);
 
@@ -18,7 +15,7 @@ function renderData(data) {
      const itemTotal = data.items.length>0?getTotal(data.items):0;
      document.querySelector('.expense-list').innerHTML = '';
      
-    data.items.reverse().forEach((item, pos) => {
+    data.items.forEach((item, pos) => {
         let li = elementCreator('li','expense-item');
     let span1 = elementCreator('span', 'expense-name', `${item.name}`)
     let span2 = elementCreator('span', 'expense-amount', `₹${item.amount}`)
@@ -51,7 +48,7 @@ form.addEventListener('submit', (event) => {
     let formData = new FormData(event.currentTarget);
     const expenseName = formData.get('expense-name');
     const expenseAmount = Number(formData.get('expense-amount'));
-    data.items = [...data.items, {name: expenseName, amount: expenseAmount}];
+    data.items.unshift({name: expenseName, amount: expenseAmount});
     
    window.localStorage.setItem('expenseData',JSON.stringify(data));
    renderData(data);
