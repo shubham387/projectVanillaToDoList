@@ -1,0 +1,113 @@
+
+
+        body {
+            font-family: 'Inter';
+        }
+
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0px;
+        }
+
+        .main-section {
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .main-section .container {
+            padding: 40px 30px;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: auto;
+            box-shadow: 0px 0px 9px #3334;
+            border-radius: 10px;
+        }
+
+        h3 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .expenseForm {
+            display: flex;
+            gap: 5px;
+            flex-direction: column;
+        }
+
+        .expenseForm .buttons {
+            margin-right: auto;
+        }
+
+        .expenseForm .button {
+            box-shadow: none;
+            outline: none;
+            border: 1px solid blue;
+            border-radius: 2px;
+            padding: 10px 15px;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            transition: 0.5s all;
+        }
+
+        .expenseForm .button:hover {
+            background-color: transparent;
+            color: black;
+        }
+
+        .expenseForm input {
+            box-shadow: none;
+            outline: none;
+            padding: 8px 5px;
+            margin-bottom: 5px;
+        }
+
+        .expense-item {
+            background-color: #aaa3;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        
+        }
+
+        .expense-item .delete-item {
+            display: flex;
+            align-items: center;
+            width: 20px; 
+            height: 20px;
+            cursor: pointer;
+            position: relative;
+            
+            margin-left: auto;
+        }
+        .expense-item  .delete-item::before,  .expense-item .delete-item::after {
+     content: "";
+     height: 2px; 
+     width: 100%;   
+     background-color: #000;
+     display: block;
+     position:  absolute;
+}
+.expense-item  .delete-item::before{transform: rotate(45deg);}
+.expense-item  .delete-item::after{transform: rotate(-45deg);}
+        .expense-item span {
+            font-weight: bold;
+        }
+
+        .total-expense {
+            font-weight: bold;
+            text-align: center;
+            margin-top: 15px;
+        }
+    
