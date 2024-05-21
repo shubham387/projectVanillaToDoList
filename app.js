@@ -1,5 +1,5 @@
 let data = window.localStorage.getItem('expenseData')? JSON.parse(window.localStorage.getItem('expenseData')) : {items: []} ;
-console.log(data);
+console.log('changed js file');
 
 function getTotal(items) {
     let total = 0;
